@@ -17,14 +17,24 @@ const server = http.createServer(app);
 // Socket.IO setup
 const io = new Server(server, {
     cors: {
-        origin: process.env.CLIENT_URL || 'http://localhost:3000',
-        methods: ['GET', 'POST']
+        origin: [
+            'http://localhost:3000',
+            'https://client-beta-olive.vercel.app'
+        ],
+        methods: ['GET', 'POST'],
+        credentials: true
     }
 });
 
 // Middleware
 app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000'
+    origin: [
+        'http://localhost:3000',
+        'https://client-beta-olive.vercel.app'
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
