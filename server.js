@@ -8,6 +8,7 @@ const { Server } = require('socket.io');
 const roomRoutes = require('./routes/roomRoutes');
 const searchRoutes = require('./routes/searchRoutes');
 const socketHandler = require('./socket/socketHandler');
+const roomController = require('./controllers/roomController');
 const { createRoom, joinRoom, getRoomDetails, addSongToRoom, voteInRoom, skipInRoom, getQueue, getActiveUsers, listRooms } = require('./controllers/roomController');
 
 const app = express();
