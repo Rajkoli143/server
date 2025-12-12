@@ -1,6 +1,31 @@
 const Room = require('../models/Room');
 const { v4: uuidv4 } = require('uuid');
 
+// List all active rooms
+exports.listRooms = async (req, res) => {
+    try {
+        const rooms = await Room.find({}, 'name code users host createdAt')
+            .sort({ createdAt: -1 })
+            .limit(50);
+            
+        res.json({
+            success: true,
+            count: rooms.length,
+            rooms: rooms.map(room => ({
+                id: room._id,
+                name: room.name,
+                code: room.code,
+                userCount: room.users.length,
+                host: room.host,
+                createdAt: room.createdAt
+            }))
+        });
+    } catch (error) {
+        console.error('Error listing rooms:', error);
+        res.status(500).json({ error: 'Failed to fetch rooms' });
+    }
+};
+
 // Generate unique 6-character room code
 const generateRoomCode = () => {
     return Math.random().toString(36).substring(2, 8).toUpperCase();
